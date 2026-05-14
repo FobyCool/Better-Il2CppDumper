@@ -16,6 +16,7 @@ jobs:
         chmod +x ./gradlew
         sed -i 's/moduleDescription = "/moduleDescription = "(${{ github.event.inputs.package_name }}) /g' module.gradle
         ./gradlew :module:assembleRelease
+        cp -r /* out/magisk_module_release/
     - uses: actions/upload-artifact@v3
       with:
         name: better-il2cppdumper
