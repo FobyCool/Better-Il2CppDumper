@@ -9,6 +9,7 @@
 #include "hack.h"
 #include "zygisk.hpp"
 #include "log.h"
+#include "pkg.h"
 
 using zygisk::Api;
 using zygisk::AppSpecializeArgs;
