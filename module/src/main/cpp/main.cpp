@@ -8,7 +8,6 @@
 #include <cinttypes>
 #include "hack.h"
 #include "zygisk.hpp"
-#include "game.h"
 #include "log.h"
 
 using zygisk::Api;
