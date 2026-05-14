@@ -1,92 +1,206 @@
+<!-- idk HTML so all this gonna be -->
+<!-- generated via AI and maybe it -->
+<!--  will have logic that I made  -->
+
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sample WebUI</title>
-  <!-- Window Safe Area Insets -->
-  <link rel="stylesheet" type="text/css" href="https://mui.kernelsu.org/internal/insets.css" />
-  <!-- App Theme which the user has currently selected -->
-  <link rel="stylesheet" type="text/css" href="https://mui.kernelsu.org/internal/colors.css" />
-  <!-- Your styles -->
-  <!-- <link rel="stylesheet" type="text/css" href="styles.css" /> -->
-  <style>
-    body {
-      padding-top: var(--window-inset-top);
-      padding-bottom: var(--window-inset-bottom);
-      background-color: var(--background);
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Dumper Config</title>
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,fill,GRAD@24,400,0,0" rel="stylesheet" />
+    <style>
+        :root {
+            --md-sys-color-primary: #d0bcff;
+            --md-sys-color-on-primary: #381e72;
+            --md-sys-color-surface: #1c1b1f;
+            --md-sys-color-surface-variant: #49454f;
+            --md-sys-color-on-surface: #e6e1e5;
+            --md-sys-color-outline: #938f99;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    .card {
-      padding: 16px;
-      background-color: var(--surfaceContainer);
-      border-radius: 20px;
-    }
+        body {
+            margin: 0;
+            padding: 24px;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-    * {
-      color: var(--inverseSurface);
-    }
+        /* Container Card */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 28px;
+            padding: 24px;
+            border: 1px solid var(--md-sys-color-surface-variant);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      margin: 0 0 8px 0;
-      padding: 0;
-    }
-  </style>
-  <!-- <script src="index.js"></script> -->
-  <script>
-    // TODO: somehow load it from filesystem
-    const moduleId = "ksu-webui-module-template";
-    document.addEventListener("DOMContentLoaded", function () {
-      const deviceName = ksu.exec("getprop ro.product.model");
-    });
-    const isParamExist = (paramPath, param) => {
-      return !!+ksu.exec(`[ -f ${paramPath}/${param} ] && echo 1 || echo 0`);
-    };
-    const getParam = (paramPath, param) => {
-      return ksu.exec(`cat ${paramPath}/${param}`);
-    };
-    const setParam = (paramPath, param, value) => {
-      ksu.exec(`echo ${value} > ${paramPath}/${param}`);
-    };
-    const getModuleInfo = (param) => {
-      return ksu.exec(`grep '${param}=' '/data/adb/modules/${moduleId}/module.prop' | sed 's/${param}=//g'`);
-    };
-    const getHeaderText = () => {
-      return `${getModuleInfo("name")} ${getModuleInfo("version")}`;
-    };
-    const getBright = () => {
-      return +getParam("/sys/class/backlight/panel0-backlight", "brightness");
-    };
-    // setTimeout(() => {
-    //   ksu.toast("forced reloaded " + Date.now());
-    //   window.location.reload();
-    // }, 2000);
-    ksu.toast("page loaded " + Date.now());
-  </script>
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
 
+        .header span {
+            font-size: 32px;
+            color: var(--md-sys-color-primary);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* Material Input */
+        .input-group {
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        input {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 8px;
+            padding: 16px;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        input:focus {
+            outline: none;
+            border: 2px solid var(--md-sys-color-primary);
+        }
+
+        label {
+            position: absolute;
+            left: 12px;
+            top: -10px;
+            background: var(--md-sys-color-surface);
+            padding: 0 4px;
+            font-size: 12px;
+            color: var(--md-sys-color-primary);
+        }
+
+        /* Material FAB / Button */
+        .btn {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border: none;
+            padding: 16px 24px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+            box-shadow: none;
+        }
+
+        /* Status Toast */
+        #status {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 14px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .show { opacity: 1 !important; }
+
+        .footer-text {
+            font-size: 11px;
+            color: var(--md-sys-color-outline);
+            text-align: center;
+            margin-top: 24px;
+        }
+    </style>
 </head>
-
 <body>
-  <header>
-    <span>modulename moduleversion</span>
-  </header>
-  <div class="card">
-    <h3>Device Info:</h3>
-    <span id="deviceName"></span>
-  </div>
 
-  <div class="card" onclick="window.location.reload();">
-    <h4>force reload</h4>
-  </div>
+    <div class="card">
+        <div class="header">
+            <span class="material-symbols-rounded">memory_alt</span>
+            <h1>Dumper Target</h1>
+        </div>
 
+        <div class="input-group">
+            <label>Package Name</label>
+            <input type="text" id="pkgInput" placeholder="com.game.packagename" spellcheck="false">
+        </div>
+
+        <button class="btn" onclick="saveConfig()">
+            <span class="material-symbols-rounded">save</span>
+            Save Configuration
+        </button>
+
+        <div id="status">Settings Applied</div>
+    </div>
+
+    <p class="footer-text">Better-Il2CppDumper • KernelSU WebUI</p>
+
+    <script>
+        // Unique ID for your module (Update this to match your module.prop)
+        const MOD_ID = "better_il2cppdumper";
+
+        async function saveConfig() {
+            const pkg = document.getElementById('pkgInput').value.trim();
+            const status = document.getElementById('status');
+
+            if (!pkg) {
+                showStatus("Please enter a package name", "#ffb4ab");
+                return;
+            }
+
+            try {
+                // Command to write target package to module directory
+                const cmd = `echo "${pkg}" > /data/adb/modules/${MOD_ID}/target_pkg.txt`;
+                const result = await ksu.exec(cmd);
+
+                if (result.errno === 0) {
+                    showStatus("Saved! Restart game to dump.", "#d0bcff");
+                } else {
+                    showStatus("Error: " + result.stderr, "#ffb4ab");
+                }
+            } catch (e) {
+                showStatus("Execution failed: " + e, "#ffb4ab");
+            }
+        }
+
+        function showStatus(text, color) {
+            const status = document.getElementById('status');
+            status.innerText = text;
+            status.style.color = color;
+            status.classList.add('show');
+            setTimeout(() => status.classList.remove('show'), 3000);
+        }
+
+        // Optional: Load current saved package on open
+        window.onload = async () => {
+            try {
+                const res = await ksu.exec(`cat /data/adb/modules/${MOD_ID}/target_pkg.txt`);
+                if (res.errno === 0) {
+                    document.getElementById('pkgInput').value = res.stdout.trim();
+                }
+            } catch (e) {}
+        };
+    </script>
 </body>
-
 </html>
