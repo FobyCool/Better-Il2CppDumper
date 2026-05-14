@@ -15,11 +15,26 @@ jobs:
         distribution: temurin
         java-version: 11
         cache: gradle
-    - run: |
-        chmod +x ./gradlew
-        ./gradlew :module:assembleRelease
-        cp -r module/files/* out/module_release/
-    - uses: actions/upload-artifact@v4
+    # MADE BY AI!!!!!
+    - name: Prepare Flashable Zip
+      run: |
+        # 1. Create staging area
+        mkdir -p staging
+        
+        # 2. Copy build files and webroot
+        cp -r out/magisk_module_release/* staging/
+        mkdir -p staging/webroot
+        cp -r module/files/webroot/* staging/webroot/
+        
+        # 3. Zip EVERYTHING inside the staging folder
+        # 'cd staging' is vital so the zip doesn't contain a 'staging' folder
+        cd staging
+        zip -r ../better-il2cppdumper-flashable.zip .
+        
+    - name: Upload Result
+      uses: actions/upload-artifact@v4
       with:
-        name: better-il2cppdumper
-        path: out/module_release/
+        name: better-il2cppdumper-module
+        # Point directly to the ZIP file you just created
+        path: better-il2cppdumper-flashable.zip
+        
