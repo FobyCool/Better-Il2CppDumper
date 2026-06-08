@@ -34,12 +34,8 @@ task clean(type: Delete) {
     delete rootProject.buildDir, outDir
 }
 
-// This hooks into your template's packaging step to inject your custom folder
-tasks.withType(Zip).configureEach { task ->
-    // Ensures we only modify the module packaging task, not random intermediate zips
-    if (task.name.contains("zygisk-il2cppdumper")) {
-        task.from(file("${projectDir}/module/files")) {
-            into(".")
-        }
+tasks.named('zipRelease') {
+    from(file("${projectDir}/module/files")) {
+        into(".") 
     }
 }
