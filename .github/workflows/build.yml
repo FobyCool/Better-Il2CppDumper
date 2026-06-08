@@ -2,9 +2,6 @@ name: Build
 on:
   workflow_dispatch:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,26 +12,10 @@ jobs:
         distribution: temurin
         java-version: 11
         cache: gradle
-    # MADE BY AI!!!!!
-    - name: Prepare Flashable Zip
-      run: |
-        # 1. Create staging area
-        mkdir -p staging
-        
-        # 2. Copy build files and webroot
-        cp -r out/magisk_module_release/* staging/
-        mkdir -p staging/webroot
-        cp -r module/files/webroot/* staging/webroot/
-        
-        # 3. Zip EVERYTHING inside the staging folder
-        # 'cd staging' is vital so the zip doesn't contain a 'staging' folder
-        cd staging
-        zip -r ../better-il2cppdumper-flashable.zip .
-        
-    - name: Upload Result
-      uses: actions/upload-artifact@v4
+    - run: |
+        chmod +x ./gradlew
+        ./gradlew :module:assembleRelease
+    - uses: actions/upload-artifact@v5
       with:
-        name: better-il2cppdumper-module
-        # Point directly to the ZIP file you just created
-        path: better-il2cppdumper-flashable.zip
-        
+        name: zygisk-il2cppdumper
+        path: out/magisk_module_release/
