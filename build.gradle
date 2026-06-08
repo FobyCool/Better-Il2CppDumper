@@ -33,9 +33,3 @@ ext {
 task clean(type: Delete) {
     delete rootProject.buildDir, outDir
 }
-
-tasks.named('zipRelease') {
-    from(file("${projectDir}/module/files")) {
-        into(".") 
-    }
-}
