@@ -30,6 +30,20 @@ ext {
     outDir = file("$rootDir/out")
 }
 
+task packageZip(type: Zip) {
+    destinationDirectory = outDir
+    archiveFileName = "${rootProject.name ?: 'module'}.zip"
+
+    // Include files from module/files at the root of the zip
+    from("$rootDir/module/files") {
+        include '**/*'
+    }
+
+    // Optional: include template and scripts if needed
+    // from("$rootDir/template") { into 'template' }
+    // from("$rootDir/scripts") { into 'scripts' }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir, outDir
 }
