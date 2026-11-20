@@ -63,7 +63,7 @@ afterEvaluate {
                 filter(FixCrLfFilter.class,
                         eol: FixCrLfFilter.CrLf.newInstance("lf"))
             }
-            from(file("$roorDir/files")) {
+            from(file("$rootDir/files")) {
                 into "." // Places files in the root folder of the staging directory
             }
             from("$buildDir/intermediates/stripped_native_libs/$variantLowered/out/lib") {
