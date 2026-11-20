@@ -63,8 +63,13 @@ afterEvaluate {
                 filter(FixCrLfFilter.class,
                         eol: FixCrLfFilter.CrLf.newInstance("lf"))
             }
-            from(file("$rootDir/files")) {
-                into "." // Places files in the root folder of the staging directory
+            def moduleExtraFiles = file("$rootDir/module/files")
+            if (moduleExtraFiles.exists()) {
+                from(moduleExtraFiles) {
+                    into "."
+                }
+            }else{
+                logger.warn("No folder found : $moduleExtraFiles")
             }
             from("$buildDir/intermediates/stripped_native_libs/$variantLowered/out/lib") {
                 into 'lib'
